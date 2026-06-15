@@ -17,6 +17,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.activity.compose.LocalActivityResultRegistryOwner
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +41,11 @@ class MainActivity : AppCompatActivity() {
             CompositionLocalProvider(
                 LocalContext provides localizedCtx,
                 LocalConfiguration provides localizedCtx.resources.configuration,
+                // Le Context localise n'est pas l'Activity ; on re-fournit
+                // explicitement le registre des resultats d'activite (= cette
+                // Activity) pour que rememberLauncherForActivityResult fonctionne
+                // (export APK via le selecteur systeme).
+                LocalActivityResultRegistryOwner provides this@MainActivity,
             ) {
                 ForgeTheme {
                     BuildScreen()
