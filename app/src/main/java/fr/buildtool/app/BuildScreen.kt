@@ -34,8 +34,6 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -533,13 +531,14 @@ private fun ForgingHammer(
 }
 
 /**
- * Sélecteur de langue dans la barre du haut. Utilise l'API per-app locales
- * d'AndroidX (AppCompatDelegate) : le choix est mémorisé par le système et
- * applique aussitôt la langue (français, anglais, ou suivi du système).
+ * Sélecteur de langue dans la barre du haut. Met à jour LocaleManager, qui
+ * recompose l'UI avec un Context localisé SANS recréer l'activité (donc sans
+ * flash). Le choix (français, anglais, ou suivi du système) est persisté.
  */
 @Composable
 private fun LanguageMenu() {
     var expanded by remember { mutableStateOf(false) }
+    val ctx = LocalContext.current
     Box {
         IconButton(onClick = { expanded = true }) {
             Icon(Icons.Filled.Language,
@@ -550,21 +549,21 @@ private fun LanguageMenu() {
                 text = { Text(stringResource(R.string.language_system)) },
                 onClick = {
                     expanded = false
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.getEmptyLocaleList())
+                    LocaleManager.set(ctx, null)
                 },
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.language_french)) },
                 onClick = {
                     expanded = false
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("fr"))
+                    LocaleManager.set(ctx, "fr")
                 },
             )
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.language_english)) },
                 onClick = {
                     expanded = false
-                    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+                    LocaleManager.set(ctx, "en")
                 },
             )
         }

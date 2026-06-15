@@ -8,7 +8,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.MediaType.Companion.toMediaType
 import org.json.JSONObject
 import java.util.concurrent.TimeUnit
-import androidx.appcompat.app.AppCompatDelegate
 
 /** Etat de la chaine de build cote serveur. */
 data class ChainStatus(
@@ -50,12 +49,7 @@ class BuildClient(
     }
 
     /** Renvoie le code langue effectif de l'app ("fr" ou "en", defaut "en"). */
-    private fun uiLang(): String {
-        val locales = AppCompatDelegate.getApplicationLocales()
-        val tag = if (!locales.isEmpty) locales.get(0)?.language
-                  else java.util.Locale.getDefault().language
-        return if (tag == "fr") "fr" else "en"
-    }
+    private fun uiLang(): String = LocaleManager.effective()
 
     /** Verifie si le serveur repond et renvoie l'etat de la chaine. */
     suspend fun status(): ChainStatus? = withContext(Dispatchers.IO) {

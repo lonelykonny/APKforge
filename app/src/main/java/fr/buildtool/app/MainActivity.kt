@@ -1,5 +1,6 @@
 package fr.buildtool.app
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -12,31 +13,35 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 
 class MainActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        // Restaure la langue choisie avant d'attacher le contexte de base.
+        LocaleManager.load(newBase)
+        super.attachBaseContext(LocaleManager.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Quand la langue change, AppCompat recree l'activite. Par defaut la
-        // transition est seche (flash noir). On force un fondu enchaine pour que
-        // l'ancien et le nouvel ecran se croisent en douceur.
-        @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= 34) {
-            overrideActivityTransition(
-                OVERRIDE_TRANSITION_OPEN,
-                android.R.anim.fade_in, android.R.anim.fade_out,
-            )
-            overrideActivityTransition(
-                OVERRIDE_TRANSITION_CLOSE,
-                android.R.anim.fade_in, android.R.anim.fade_out,
-            )
-        } else {
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        }
         enableEdgeToEdge()
         setContent {
-            ForgeTheme {
-                BuildScreen()
+            // On lit LocaleManager.current : tout changement recompose ce bloc et
+            // re-fournit un Context localise, SANS recreer l'activite (pas de flash).
+            val lang = LocaleManager.current
+            val baseCtx = LocalContext.current
+            val localizedCtx = remember(lang) { LocaleManager.wrap(baseCtx.applicationContext) }
+            CompositionLocalProvider(
+                LocalContext provides localizedCtx,
+                LocalConfiguration provides localizedCtx.resources.configuration,
+            ) {
+                ForgeTheme {
+                    BuildScreen()
+                }
             }
         }
     }
