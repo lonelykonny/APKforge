@@ -58,20 +58,11 @@
         <!-- Fond de fenetre (jour/nuit) montre pendant la recreation d'activite
              au changement de langue : remplace le flash noir par un fond neutre. -->
         <item name="android:windowBackground">@color/window_background</item>
-        <item name="android:windowAnimationStyle">@style/ForgeWindowAnimation</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
     </style>
 
-    <!-- Fondu enchaine lors de la (re)creation d'activite (changement de langue),
-         pour eviter le flash noir sec. -->
-    <style name="ForgeWindowAnimation">
-        <item name="android:activityOpenEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
-        <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
-    </style>
     <string name="install_failed">Impossible de lancer l\'installation. Autorise l\'installation d\'apps inconnues pour APKforge.</string>
     <string name="install_download_failed">Echec du telechargement de l\'APK depuis le serveur.</string>
 </resources>
