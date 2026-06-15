@@ -31,6 +31,13 @@ android {
     buildFeatures {
         compose true
     }
+
+    // Renomme l'APK de sortie en "APKforge.apk" (au lieu de "app-debug.apk").
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.outputFileName = "APKforge.apk"
+        }
+    }
 }
 
 dependencies {
