@@ -35,6 +35,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -119,10 +122,21 @@ fun BuildScreen(vm: BuildViewModel = viewModel()) {
                 if (busy) {
                     if (state.phase == UiState.Phase.BUILDING) {
                         // Pendant la compilation : marteau qui frappe l'Android.
-                        ForgingHammer(
-                            size = 30.dp,
-                            color = MaterialTheme.colorScheme.onPrimary,
-                        )
+                        // Le bouton est désactivé, donc son fond passe en gris : clair
+                        // en mode clair, foncé en mode sombre. Une couleur fixe serait
+                        // illisible dans l'un des deux cas. On choisit donc une teinte
+                        // teal adaptée au mode, à pleine opacité (le bouton désactivé
+                        // atténuant son contenu, on force la couleur via le Canvas).
+                        val forgeColor = if (isSystemInDarkTheme())
+                            Color(0xFF5FE5D4)   // teal vif sur fond sombre
+                        else
+                            Color(0xFF00695C)   // teal profond sur fond clair
+                        CompositionLocalProvider(LocalContentColor provides forgeColor) {
+                            ForgingHammer(
+                                size = 30.dp,
+                                color = forgeColor,
+                            )
+                        }
                         Spacer(Modifier.width(12.dp))
                         Text("Compilation…")
                     } else {

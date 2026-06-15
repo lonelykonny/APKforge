@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  APKforge — foreground. Enclume detaillee (base du repo) au DESSUS PLAT,
-  avec yeux (decoupes evenOdd) et antennes Android centres sur la table.
+  APKforge — foreground. Enclume au DESSUS PLAT (echelle 0.72). Tete d'Android
+  facon mascotte : yeux ovales ecartes et descendus sur la face, antennes courtes
+  ecartees et CONNECTEES au plateau de l'enclume.
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <group android:scaleX="0.82" android:scaleY="0.82" android:pivotX="54" android:pivotY="54"
+    <group android:scaleX="0.72" android:scaleY="0.72" android:pivotX="54" android:pivotY="54"
         android:translateY="2">
+        <path android:strokeColor="#E8EAED" android:strokeWidth="3.2" android:strokeLineCap="round"
+            android:pathData="M42.0,34.0 L38.54,25.5" />
+        <path android:strokeColor="#E8EAED" android:strokeWidth="3.2" android:strokeLineCap="round"
+            android:pathData="M67.0,34.0 L70.46,25.5" />
         <path android:fillColor="#E8EAED" android:fillType="evenOdd"
-            android:pathData="M 79.0 75.0 L 68.33 75.0 L 67.53 74.2 L 65.4 73.13 L 62.6 72.33 L 59.67 71.93 L 54.33 71.93 L 51.27 72.33 L 48.47 73.13 L 46.6 74.07 L 45.53 75.0 L 34.87 75.0 L 34.8 68.93 L 38.73 67.13 L 41.8 65.13 L 44.27 62.8 L 46.0 60.27 L 47.07 56.93 L 46.93 54.67 L 46.13 52.8 L 45.0 51.67 L 44.07 51.13 L 37.53 51.13 L 37.4 50.47 L 34.6 50.47 L 31.0 50.07 L 26.07 48.87 L 22.73 47.53 L 18.2 44.87 L 14.73 41.93 L 11.2 38.0 L 10.8 37.33 L 10.93 36.53 L 11.4 36.07 L 12.2 34.0 L 97.2 34.0 L 97.2 36.07 L 92.73 38.07 L 87.4 39.93 L 83.27 41.8 L 79.93 43.67 L 76.07 46.47 L 73.2 49.33 L 71.6 51.6 L 70.67 53.47 L 69.87 56.4 L 69.87 59.07 L 70.53 61.6 L 72.13 64.27 L 74.07 66.2 L 75.8 67.4 L 79.07 68.93 L 79.0 75.0 Z M 47.5 38.0 m -1.9 0 a 1.9 1.9 0 1 0 3.8 0 a 1.9 1.9 0 1 0 -3.8 0 Z M 61.5 38.0 m -1.9 0 a 1.9 1.9 0 1 0 3.8 0 a 1.9 1.9 0 1 0 -3.8 0 Z" />
-        <path android:strokeColor="#E8EAED" android:strokeWidth="2.2" android:strokeLineCap="round"
-            android:pathData="M47.5,31.5 L42.7,23.7" />
-        <path android:strokeColor="#E8EAED" android:strokeWidth="2.2" android:strokeLineCap="round"
-            android:pathData="M61.5,31.5 L66.3,23.7" />
+            android:pathData="M 79.0 75.0 L 68.33 75.0 L 67.53 74.2 L 65.4 73.13 L 62.6 72.33 L 59.67 71.93 L 54.33 71.93 L 51.27 72.33 L 48.47 73.13 L 46.6 74.07 L 45.53 75.0 L 34.87 75.0 L 34.8 68.93 L 38.73 67.13 L 41.8 65.13 L 44.27 62.8 L 46.0 60.27 L 47.07 56.93 L 46.93 54.67 L 46.13 52.8 L 45.0 51.67 L 44.07 51.13 L 37.53 51.13 L 37.4 50.47 L 34.6 50.47 L 31.0 50.07 L 26.07 48.87 L 22.73 47.53 L 18.2 44.87 L 14.73 41.93 L 11.2 38.0 L 10.8 37.33 L 10.93 36.53 L 11.4 36.07 L 12.2 34.0 L 97.2 34.0 L 97.2 36.07 L 92.73 38.07 L 87.4 39.93 L 83.27 41.8 L 79.93 43.67 L 76.07 46.47 L 73.2 49.33 L 71.6 51.6 L 70.67 53.47 L 69.87 56.4 L 69.87 59.07 L 70.53 61.6 L 72.13 64.27 L 74.07 66.2 L 75.8 67.4 L 79.07 68.93 L 79.0 75.0 Z M 43.5 38.2 a 2.0 3.0 0 1 0 0 6.0 a 2.0 3.0 0 1 0 0 -6.0 Z M 65.5 38.2 a 2.0 3.0 0 1 0 0 6.0 a 2.0 3.0 0 1 0 0 -6.0 Z" />
     </group>
 </vector>
