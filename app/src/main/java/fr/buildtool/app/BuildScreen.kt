@@ -338,17 +338,24 @@ private fun ResultCard(
                     if (success) stringResource(R.string.build_success) else stringResource(R.string.build_failed),
                     style = MaterialTheme.typography.titleMedium, color = onContainer)
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 if (success && apkUrl != null) {
-                    Button(onClick = { onInstall(apkUrl) }) {
+                    Button(
+                        onClick = { onInstall(apkUrl) },
+                        modifier = Modifier.weight(1f),
+                    ) {
                         Icon(Icons.Filled.Download, contentDescription = null)
                         Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.btn_install_apk))
                     }
                     FilledTonalIconButton(
                         onClick = { exportLauncher.launch("APKforge.apk") },
                         colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
                         ),
                     ) {
                         Icon(
@@ -360,8 +367,8 @@ private fun ResultCard(
                 FilledTonalIconButton(
                     onClick = onReset,
                     colors = IconButtonDefaults.filledTonalIconButtonColors(
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
                     ),
                 ) {
                     Icon(
