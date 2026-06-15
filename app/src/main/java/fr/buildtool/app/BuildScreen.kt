@@ -31,6 +31,9 @@ import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.SaveAlt
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
@@ -271,6 +274,25 @@ private fun ResultCard(
         shape = RoundedCornerShape(22.dp),
         modifier = Modifier.fillMaxWidth(),
     ) {
+        val ctx = LocalContext.current
+        val exportScope = rememberCoroutineScope()
+        // Selecteur systeme "Enregistrer sous" : l'utilisateur choisit ou sauver
+        // l'APK. Au retour, on telecharge et on ecrit dans l'URI choisi.
+        val exportLauncher = rememberLauncherForActivityResult(
+            ActivityResultContracts.CreateDocument("application/vnd.android.package-archive")
+        ) { uri ->
+            if (uri != null && apkUrl != null) {
+                exportScope.launch {
+                    val ok = ApkInstaller.exportTo(ctx, apkUrl, uri)
+                    Toast.makeText(
+                        ctx,
+                        ctx.getString(if (ok) R.string.export_ok else R.string.export_failed),
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
+            }
+        }
+
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
@@ -286,6 +308,10 @@ private fun ResultCard(
                     Button(onClick = { onInstall(apkUrl) }) {
                         Icon(Icons.Filled.Download, contentDescription = null)
                         Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.btn_install_apk))
+                    }
+                    FilledTonalButton(onClick = { exportLauncher.launch("APKforge.apk") }) {
+                        Icon(Icons.Filled.SaveAlt, contentDescription = null)
+                        Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.btn_export_apk))
                     }
                 }
                 FilledTonalButton(onClick = onReset) { Text(stringResource(R.string.btn_new_build)) }

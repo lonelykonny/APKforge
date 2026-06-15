@@ -48,4 +48,7 @@
     <string name="language_english">English</string>
     <string name="install_failed">Couldn\'t start the install. Allow installing unknown apps for APKforge.</string>
     <string name="install_download_failed">Failed to download the APK from the server.</string>
+    <string name="btn_export_apk">Export</string>
+    <string name="export_ok">APK exported successfully.</string>
+    <string name="export_failed">Failed to export the APK.</string>
 </resources>

@@ -51,4 +51,28 @@ object ApkInstaller {
         }
         ctx.startActivity(intent)
     }
+
+    /**
+     * Telecharge l'APK depuis [url] et l'ecrit dans [dest] (un URI choisi par
+     * l'utilisateur via le selecteur systeme "Enregistrer sous"). Renvoie true
+     * en cas de succes. Permet de SORTIR l'APK du sandbox de l'app, pour la
+     * garder meme apres desinstallation d'APKforge.
+     */
+    suspend fun exportTo(ctx: Context, url: String, dest: Uri): Boolean =
+        withContext(Dispatchers.IO) {
+            runCatching {
+                val conn = (URL(url).openConnection() as HttpURLConnection).apply {
+                    connectTimeout = 15000
+                    readTimeout = 60000
+                    requestMethod = "GET"
+                }
+                conn.inputStream.use { input ->
+                    ctx.contentResolver.openOutputStream(dest)?.use { output ->
+                        input.copyTo(output)
+                    } ?: return@runCatching false
+                }
+                conn.disconnect()
+                true
+            }.getOrDefault(false)
+        }
 }

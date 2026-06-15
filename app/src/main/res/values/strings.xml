@@ -65,4 +65,7 @@
 
     <string name="install_failed">Impossible de lancer l\'installation. Autorise l\'installation d\'apps inconnues pour APKforge.</string>
     <string name="install_download_failed">Echec du telechargement de l\'APK depuis le serveur.</string>
+    <string name="btn_export_apk">Exporter</string>
+    <string name="export_ok">APK exportee avec succes.</string>
+    <string name="export_failed">Echec de l\'export de l\'APK.</string>
 </resources>
