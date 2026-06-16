@@ -314,23 +314,6 @@ private fun AssistChipRow(text: String, icon: androidx.compose.ui.graphics.vecto
 }
 
 @Composable
-/**
- * Derive un nom de fichier APK a partir de l'URL du depot git.
- * Ex: "https://github.com/kys0ff/Backtalk.git" -> "Backtalk.apk"
- * Retombe sur "APKforge.apk" si l'URL est vide ou inexploitable.
- */
-private fun apkFileNameFrom(repoUrl: String?): String {
-    val cleaned = repoUrl
-        ?.trim()
-        ?.removeSuffix("/")
-        ?.removeSuffix(".git")
-        ?.substringAfterLast('/')
-        ?.takeIf { it.isNotBlank() }
-        // Garde uniquement les caracteres surs pour un nom de fichier.
-        ?.replace(Regex("[^A-Za-z0-9._-]"), "_")
-    return if (cleaned.isNullOrBlank()) "APKforge.apk" else "$cleaned.apk"
-}
-
 private fun ResultCard(
     status: String?,
     apkUrl: String?,
@@ -854,4 +837,22 @@ private fun HistorySheet(
             }
         }
     }
+}
+
+
+/**
+ * Derive un nom de fichier APK a partir de l'URL du depot git.
+ * Ex: "https://github.com/kys0ff/Backtalk.git" -> "Backtalk.apk"
+ * Retombe sur "APKforge.apk" si l'URL est vide ou inexploitable.
+ */
+private fun apkFileNameFrom(repoUrl: String?): String {
+    val cleaned = repoUrl
+        ?.trim()
+        ?.removeSuffix("/")
+        ?.removeSuffix(".git")
+        ?.substringAfterLast('/')
+        ?.takeIf { it.isNotBlank() }
+        // Garde uniquement les caracteres surs pour un nom de fichier.
+        ?.replace(Regex("[^A-Za-z0-9._-]"), "_")
+    return if (cleaned.isNullOrBlank()) "APKforge.apk" else "$cleaned.apk"
 }
