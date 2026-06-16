@@ -11,10 +11,10 @@ android {
     // ===== VERSION DE L'APP =====================================================
     // A INCREMENTER a chaque nouvelle APK pour eviter les conflits d'installation :
     //   - APP_VERSION_CODE : entier, +1 a chaque build distribue (obligatoire).
-    //   - APP_VERSION_NAME : version lisible affichee a l'utilisateur (ex 1.1).
+    //   - APP_VERSION_NAME : version lisible affichee a l'utilisateur (ex 1.2).
     // ============================================================================
-    def APP_VERSION_CODE = 9
-    def APP_VERSION_NAME = "1.1"
+    def APP_VERSION_CODE = 10
+    def APP_VERSION_NAME = "1.2"
 
     defaultConfig {
         applicationId "fr.buildtool.app"
@@ -24,9 +24,30 @@ android {
         versionName APP_VERSION_NAME
     }
 
+    // ===== SIGNING RELEASE ======================================================
+    // La keystore et les mots de passe ne sont JAMAIS committes. En CI, ils
+    // arrivent via des variables d'environnement (decodees depuis des secrets
+    // GitHub). En local, le build release n'est signe que si ces variables sont
+    // presentes ; sinon on retombe sur un build non signe (debug reste OK).
+    signingConfigs {
+        release {
+            def ksPath = System.getenv("KEYSTORE_PATH")
+            if (ksPath) {
+                storeFile file(ksPath)
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            // Signe en release uniquement si la keystore est fournie (CI).
+            if (System.getenv("KEYSTORE_PATH")) {
+                signingConfig signingConfigs.release
+            }
         }
     }
     compileOptions {
@@ -40,10 +61,10 @@ android {
         compose true
     }
 
-    // Renomme l'APK de sortie en "APKforge.apk" (au lieu de "app-debug.apk").
+    // Nomme l'APK de sortie : forge-<versionName>-<variantName>.apk
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
-            output.outputFileName = "APKforge.apk"
+            output.outputFileName = "forge-${variant.versionName}-${variant.name}.apk"
         }
     }
 }
