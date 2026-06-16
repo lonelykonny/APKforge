@@ -186,6 +186,7 @@ fun BuildScreen(vm: BuildViewModel = viewModel()) {
                 ResultCard(
                     status = state.buildStatus,
                     apkUrl = state.apkReadyUrl,
+                    apkFileName = apkFileNameFrom(state.url),
                     onInstall = { url ->
                         installScope.launch {
                             val apk = ApkInstaller.download(ctx, url)
@@ -313,9 +314,27 @@ private fun AssistChipRow(text: String, icon: androidx.compose.ui.graphics.vecto
 }
 
 @Composable
+/**
+ * Derive un nom de fichier APK a partir de l'URL du depot git.
+ * Ex: "https://github.com/kys0ff/Backtalk.git" -> "Backtalk.apk"
+ * Retombe sur "APKforge.apk" si l'URL est vide ou inexploitable.
+ */
+private fun apkFileNameFrom(repoUrl: String?): String {
+    val cleaned = repoUrl
+        ?.trim()
+        ?.removeSuffix("/")
+        ?.removeSuffix(".git")
+        ?.substringAfterLast('/')
+        ?.takeIf { it.isNotBlank() }
+        // Garde uniquement les caracteres surs pour un nom de fichier.
+        ?.replace(Regex("[^A-Za-z0-9._-]"), "_")
+    return if (cleaned.isNullOrBlank()) "APKforge.apk" else "$cleaned.apk"
+}
+
 private fun ResultCard(
     status: String?,
     apkUrl: String?,
+    apkFileName: String,
     onInstall: (String) -> Unit,
     onReset: () -> Unit,
 ) {
@@ -377,7 +396,7 @@ private fun ResultCard(
                         Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.btn_install_apk))
                     }
                     FilledTonalIconButton(
-                        onClick = { exportLauncher.launch("APKforge.apk") },
+                        onClick = { exportLauncher.launch(apkFileName) },
                         colors = IconButtonDefaults.filledTonalIconButtonColors(
                             containerColor = MaterialTheme.colorScheme.primary,
                             contentColor = MaterialTheme.colorScheme.onPrimary,
