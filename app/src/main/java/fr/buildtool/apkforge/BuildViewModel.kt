@@ -1,4 +1,4 @@
-package fr.buildtool.app
+package fr.buildtool.apkforge
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

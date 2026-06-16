@@ -85,7 +85,7 @@ le met à disposition en artifact.
 
 **En local** depuis Termux :
 ```bash
-bash ~/android-build-tools/build-android-local.sh ~/forge
+bash ~/android-build-tools/build-android-local.sh ~/APKforge
 ```
 
 Projet Android natif : `compileSdk 36`, `minSdk 26`, AGP 8.13, Material 3

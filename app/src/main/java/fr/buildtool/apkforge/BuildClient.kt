@@ -1,4 +1,4 @@
-package fr.buildtool.app
+package fr.buildtool.apkforge
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

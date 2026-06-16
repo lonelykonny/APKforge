@@ -1,4 +1,4 @@
-package fr.buildtool.app
+package fr.buildtool.apkforge
 
 import android.content.Context
 import java.io.File

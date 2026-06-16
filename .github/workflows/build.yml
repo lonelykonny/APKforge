@@ -1,4 +1,4 @@
-name: Build Forge APK
+name: Build APKforge APK
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: forge-debug-apk
+          name: apkforge-debug-apk
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
 

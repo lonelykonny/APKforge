@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'fr.buildtool.app'
+    namespace 'fr.buildtool.apkforge'
     compileSdk 36
 
     // ===== VERSION DE L'APP =====================================================
@@ -17,7 +17,7 @@ android {
     def APP_VERSION_NAME = "1.2"
 
     defaultConfig {
-        applicationId "fr.buildtool.app"
+        applicationId "fr.buildtool.apkforge"
         minSdk 26
         targetSdk 36
         versionCode APP_VERSION_CODE

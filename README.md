@@ -80,7 +80,7 @@ APK and makes it available as an artifact.
 
 **Locally** from Termux:
 ```bash
-bash ~/android-build-tools/build-android-local.sh ~/forge
+bash ~/android-build-tools/build-android-local.sh ~/APKforge
 ```
 
 Native Android project: `compileSdk 36`, `minSdk 26`, AGP 8.13, Material 3
