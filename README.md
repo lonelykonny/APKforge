@@ -21,16 +21,22 @@ and grab the resulting APK at the end — all without leaving your phone.
 ## How it works
 
 APKforge is only the **interface**. The entire build happens server-side, where
-the `aapt2` + `qemu` toolchain lives. This is a technical necessity: a sandboxed
-Android app cannot launch `proot`/`qemu` itself.
+the toolchain lives. This is a technical necessity: a sandboxed Android app
+cannot launch a compiler itself.
 
 ```
-  APKforge app (Compose)  ──HTTP 127.0.0.1:8765──▶  buildserver.py (Termux / proot)
+  APKforge app (Compose)  ──HTTP 127.0.0.1:8765──▶  buildserver.py (Termux)
         │                                                  │
-   URL input,                                    runs android-builder.sh
-   live logs,                                    (clone, detect, build via qemu)
-   install button
+   URL input,                              native build (ARM aapt2, no qemu)
+   live logs,                                  └─ on a chain failure only,
+   install button                                falls back to Debian+qemu
 ```
+
+The build runs **natively in Termux by default** (native ARM `aapt2`, no
+emulation — fast). A Debian + `qemu` proot exists only as a **fallback**, used
+solely when a native build fails for a reason tied to the toolchain itself (not
+to the project's code). That fallback is **installed on demand**, the first time
+it's actually needed, so a working native setup keeps zero proot on disk.
 
 The companion project that actually runs the builds is
 [`android-build-tools`](https://github.com/Pandarte/android-build-tools).
@@ -39,20 +45,22 @@ The companion project that actually runs the builds is
 
 To set up once on the phone:
 
-1. **Termux** installed, with the
-   [`android-build-tools`](https://github.com/Pandarte/android-build-tools)
-   toolchain and its `buildserver.py` in place inside the Ubuntu proot.
-2. **The server running**:
+1. **Termux** installed. The app's **Install toolchain** button runs
+   `forge-install.sh`, which clones
+   [`android-build-tools`](https://github.com/Pandarte/android-build-tools),
+   sets up the **native** chain (`setup-termux-native.sh`) and starts the server
+   — all in Termux, no proot.
+2. **The server running** (started automatically by the install, or by hand):
    ```bash
-   proot-distro login ubuntu
    python3 ~/buildserver/buildserver.py
    ```
-   (or as an automatic service via `start-build-server.sh`.)
 3. **APKforge** installed and launched. It checks the connection to the server
    on startup.
 
 On first launch, if the toolchain isn't detected, the app offers an **Install
 toolchain** button that triggers the installation server-side and shows its logs.
+The Debian fallback is **not** installed at this point — only later, if a native
+build ever fails for a toolchain reason.
 
 ## Usage
 
@@ -97,7 +105,7 @@ Expressive (`material3:1.4.0-alpha10`).
 app/src/main/
 ├── AndroidManifest.xml
 ├── assets/
-│   ├── forge-install.sh          server-side toolchain installation
+│   ├── forge-install.sh          native toolchain install + server start
 │   └── forge-start.sh            build server startup
 ├── java/fr/buildtool/app/
 │   ├── MainActivity.kt           Material You theme + edge-to-edge
