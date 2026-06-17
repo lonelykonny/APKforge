@@ -39,7 +39,7 @@ to the project's code). That fallback is **installed on demand**, the first time
 it's actually needed, so a working native setup keeps zero proot on disk.
 
 The companion project that actually runs the builds is
-[`android-build-tools`](https://github.com/Pandarte/android-build-tools).
+[`android-build-tools`](https://github.com/lonelykonny/android-build-tools).
 
 ## Requirements
 
@@ -47,7 +47,7 @@ To set up once on the phone:
 
 1. **Termux** installed. The app's **Install toolchain** button runs
    `forge-install.sh`, which clones
-   [`android-build-tools`](https://github.com/Pandarte/android-build-tools),
+   [`android-build-tools`](https://github.com/lonelykonny/android-build-tools),
    sets up the **native** chain (`setup-termux-native.sh`) and starts the server
    — all in Termux, no proot.
 2. **The server running** (started automatically by the install, or by hand):
@@ -122,5 +122,5 @@ app/src/main/
 
 ## Related projects
 
-- [`android-build-tools`](https://github.com/Pandarte/android-build-tools) — the
+- [`android-build-tools`](https://github.com/lonelykonny/android-build-tools) — the
   build toolchain and HTTP server that APKforge drives.

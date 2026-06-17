@@ -20,7 +20,7 @@ echo "######################################################"
 HOME_DIR="/data/data/com.termux/files/home"
 TOOLS="$HOME_DIR/android-build-tools"
 SERVER_DIR="$HOME_DIR/buildserver"
-ABT_REPO="https://github.com/Pandarte/android-build-tools.git"
+ABT_REPO="https://github.com/lonelykonny/android-build-tools.git"
 
 # --- 1. Termux : paquets de base ---------------------------------------------
 echo "== [1/4] Termux : paquets de base =="
