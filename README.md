@@ -1,20 +1,14 @@
 # ⚡ APKforge
 
 **Android APK build interface, driven from your phone.**
-
-> 🇬🇧 English &nbsp;•&nbsp; [🇫🇷 Français](README.fr.md)
+> 🇬🇧 English • [🇫🇷 Français](https://github.com/lonelykonny/APKforge/blob/master/README.fr.md)
 
 APKforge is an Android app (Kotlin / Jetpack Compose, Material 3 Expressive,
 dynamic Material You colors) that drives a local build toolchain running inside
 Termux. Paste a git repository URL, tap **Build**, watch the logs stream live,
 and grab the resulting APK at the end — all without leaving your phone.
 
-<p align="left">
-  <img alt="Platform" src="https://img.shields.io/badge/platform-Android%2012%2B-3DDC84">
-  <img alt="Language" src="https://img.shields.io/badge/Kotlin-Jetpack%20Compose-7F52FF">
-  <img alt="minSdk" src="https://img.shields.io/badge/minSdk-26-blue">
-  <img alt="compileSdk" src="https://img.shields.io/badge/compileSdk-36-blue">
-</p>
+[![Platform](https://img.shields.io/badge/platform-Android%2012%2B-3DDC84)](https://img.shields.io/badge/platform-Android%2012%2B-3DDC84) [![Language](https://img.shields.io/badge/Kotlin-Jetpack%20Compose-7F52FF)](https://img.shields.io/badge/Kotlin-Jetpack%20Compose-7F52FF) [![minSdk](https://img.shields.io/badge/minSdk-26-blue)](https://img.shields.io/badge/minSdk-26-blue) [![compileSdk](https://img.shields.io/badge/compileSdk-36-blue)](https://img.shields.io/badge/compileSdk-36-blue)
 
 ---
 
@@ -25,11 +19,11 @@ the toolchain lives. This is a technical necessity: a sandboxed Android app
 cannot launch a compiler itself.
 
 ```
-  APKforge app (Compose)  ──HTTP 127.0.0.1:8765──▶  buildserver.py (Termux)
-        │                                                  │
-   URL input,                              native build (ARM aapt2, no qemu)
-   live logs,                                  └─ on a chain failure only,
-   install button                                falls back to Debian+qemu
+APKforge app (Compose)  ──HTTP 127.0.0.1:8765──▶  buildserver.py (Termux)
+      │                                                  │
+ URL input,                              native build (ARM aapt2, no qemu)
+ live logs,                                  └─ on a chain failure only,
+ install button                                falls back to Debian+qemu
 ```
 
 The build runs **natively in Termux by default** (native ARM `aapt2`, no
@@ -38,8 +32,7 @@ solely when a native build fails for a reason tied to the toolchain itself (not
 to the project's code). That fallback is **installed on demand**, the first time
 it's actually needed, so a working native setup keeps zero proot on disk.
 
-The companion project that actually runs the builds is
-[`android-build-tools`](https://github.com/lonelykonny/android-build-tools).
+The companion project that actually runs the builds is [`android-build-tools`](https://github.com/lonelykonny/android-build-tools).
 
 ## Requirements
 
@@ -51,9 +44,11 @@ To set up once on the phone:
    sets up the **native** chain (`setup-termux-native.sh`) and starts the server
    — all in Termux, no proot.
 2. **The server running** (started automatically by the install, or by hand):
-   ```bash
+
+   ```
    python3 ~/buildserver/buildserver.py
    ```
+
 3. **APKforge** installed and launched. It checks the connection to the server
    on startup.
 
@@ -74,12 +69,12 @@ build ever fails for a toolchain reason.
 APKforge builds with the very toolchain it drives — or via continuous
 integration.
 
-**GitHub Actions** (easiest): a push to `main`/`master` triggers the
-[`build.yml`](.github/workflows/build.yml) workflow, which produces the debug
+**GitHub Actions** (easiest): a push to `main`/`master` triggers the [`build.yml`](https://github.com/lonelykonny/APKforge/blob/master/.github/workflows/build.yml) workflow, which produces the debug
 APK and makes it available as an artifact.
 
 **Locally** from Termux:
-```bash
+
+```
 bash ~/android-build-tools/build-android-local.sh ~/APKforge
 ```
 
@@ -93,11 +88,10 @@ Expressive (`material3:1.4.0-alpha10`).
 - **Localization**: French and English, following the system language, with an
   in-app language picker (System / Français / English) in the top bar.
 - **Network security**: cleartext traffic is restricted to `127.0.0.1` (see
-  [`network_security_config.xml`](app/src/main/res/xml/network_security_config.xml)).
+  [`network_security_config.xml`](https://github.com/lonelykonny/APKforge/blob/master/app/src/main/res/xml/network_security_config.xml)).
   Nothing leaves the phone.
 - **Alpha dependencies**: Material 3 Expressive relies on fast-moving alpha
-  versions. If Gradle rejects a version, use the latest available `material3`
-  alpha and the matching `compose-bom`.
+  versions. If Gradle rejects a version, use the latest available `material3` alpha and the matching `compose-bom`.
 
 ## Project structure
 
